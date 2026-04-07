@@ -55,4 +55,27 @@ Para agregar/editar un juego: modificar el array `GAMES`.
 - Animaciones scroll: framer-motion `useInView`
 
 ## Email de contacto
-alan@domotics.mx
+alan@domotics.mx — cambiar a contacto@doga.gg cuando esté disponible
+
+---
+
+## Pendientes y mejoras futuras
+
+### Alta prioridad
+- [ ] **Google Play links** — agregar URLs reales en `lib/games.ts` cuando estén disponibles
+- [ ] **OG image** — crear `/public/og-image.png` (1200×630px) para previews en redes sociales
+- [ ] **Favicon** — reemplazar el default de Next.js con el logo de Doga en `app/favicon.ico`
+- [ ] **Email de Doga** — cambiar `alan@domotics.mx` a `contacto@doga.gg` (en `components/ContactSection.tsx`)
+- [ ] **Links de redes sociales** — actualizar TikTok e Instagram con las cuentas oficiales de Doga (en `components/Footer.tsx`)
+
+### Media prioridad
+- [ ] **Ícono de Shrink** — cuando esté listo, poner PNG en `/public/` y actualizar `icon` en `lib/games.ts`
+- [ ] **Screenshots en cards de juegos** — carousel de capturas dentro de cada GameCard
+- [ ] **Analytics** — agregar Vercel Analytics (gratis, un import) para medir tráfico
+- [ ] **Páginas individuales por juego** — `/games/zynk`, `/games/skyp` con descripción larga, screenshots, trailer
+
+### Baja prioridad / futuro
+- [ ] **URLs por idioma** — `/en` y `/es` en lugar del toggle client-side, para que Google indexe ambos idiomas
+- [ ] **Press kit** — página o PDF descargable con logos, screenshots y descripción oficial para prensa
+- [ ] **Blog / devlog** — publicaciones sobre desarrollo, bueno para SEO y comunidad
+- [ ] **Formulario de contacto** — reemplazar mailto con Resend o Formspree para no exponer el email
