@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRef, useState } from "react";
 import { useLang, T } from "@/lib/i18n";
 import { GAMES, type Game } from "@/lib/games";
 import FadeIn from "@/components/FadeIn";
@@ -24,10 +25,47 @@ function AndroidIcon() {
 function GameCard({ game, index }: { game: Game; index: number }) {
   const lang = useLang();
   const tx = T[lang].games;
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [shine, setShine] = useState({ x: 50, y: 50 });
+  const [hovered, setHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = cardRef.current!.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
+    setTilt({ x: (py - 0.5) * -12, y: (px - 0.5) * 12 });
+    setShine({ x: px * 100, y: py * 100 });
+  };
+
+  const handleMouseLeave = () => {
+    setTilt({ x: 0, y: 0 });
+    setHovered(false);
+  };
 
   return (
     <FadeIn delay={index * 0.1}>
-      <div className="group relative bg-[#111111] rounded-2xl p-6 border border-white/5 hover:border-white/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_-10px_rgba(124,58,237,0.25)]">
+      <div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          transform: `perspective(700px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+          transition: hovered ? "transform 0.08s ease" : "transform 0.5s ease",
+        }}
+        className="group relative bg-[#111111] rounded-2xl p-6 border border-white/5 hover:border-white/10 hover:shadow-[0_20px_60px_-10px_rgba(124,58,237,0.3)] will-change-transform"
+      >
+        {/* Shine overlay */}
+        {hovered && (
+          <div
+            aria-hidden
+            className="absolute inset-0 rounded-2xl pointer-events-none z-10 transition-opacity"
+            style={{
+              background: `radial-gradient(circle at ${shine.x}% ${shine.y}%, rgba(255,255,255,0.06) 0%, transparent 60%)`,
+            }}
+          />
+        )}
         <div
           className={`w-full aspect-square rounded-2xl mb-5 overflow-hidden bg-gradient-to-br ${game.gradient} flex items-center justify-center ${game.comingSoon ? "opacity-40" : ""}`}
         >

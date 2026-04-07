@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import CustomCursor from "@/components/CustomCursor";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,6 +37,8 @@ export default function RootLayout({
   return (
     <html lang="es" className={inter.variable}>
       <body className="bg-[#0A0A0A] text-white antialiased" suppressHydrationWarning>
+        <CustomCursor />
+        <div aria-hidden className="grain-overlay" />
         {children}
       </body>
     </html>
